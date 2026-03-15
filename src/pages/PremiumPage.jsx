@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import Layout from '../components/Layout';
 
@@ -9,32 +8,218 @@ if (mpPublicKey) {
     initMercadoPago(mpPublicKey, { locale: 'es-CL' });
 }
 
-export default function PremiumPage() {
-    const [searchParams] = useSearchParams();
-    const providerId = searchParams.get('providerId');
-    const [preferenceId, setPreferenceId] = useState(null);
+const API_URL = import.meta.env.VITE_API_URL || 'https://brumh.cl/api';
+
+const CheckIcon = ({ color = 'text-green-500' }) => (
+    <svg className={`w-4 h-4 ${color} shrink-0`} fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+);
+const CrossIcon = () => (
+    <svg className="w-4 h-4 text-slate-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/></svg>
+);
+
+/* ── Modal de Login ── */
+function LoginModal({ isOpen, onClose, onLoginSuccess }) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const backdropRef = useRef(null);
 
-    const API_URL = import.meta.env.VITE_API_URL || 'https://brumh.cl/api';
-
-    // Si viene con providerId desde el email, crear preferencia automáticamente
+    // Cerrar con Escape
     useEffect(() => {
-        if (providerId) {
-            handleCreatePreference();
-        }
-    }, [providerId]);
+        const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+        if (isOpen) window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [isOpen, onClose]);
 
-    const handleCreatePreference = async () => {
-        if (!providerId) return;
+    // Bloquear scroll del body cuando el modal está abierto
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isOpen]);
+
+    const handleBackdropClick = (e) => {
+        if (e.target === backdropRef.current) onClose();
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         setLoading(true);
         setError(null);
 
         try {
-            const response = await fetch(`${API_URL}/payments/create-preference`, {
+            const response = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ providerId: parseInt(providerId) }),
+                body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Correo o contraseña incorrectos');
+            }
+
+            // Validar que sea un provider
+            const userRole = data.user?.role;
+            if (!['provider', 'provider_admin'].includes(userRole)) {
+                throw new Error('Solo los proveedores pueden activar Premium. Inicia sesión con tu cuenta de negocio.');
+            }
+
+            onLoginSuccess(data.access_token, data.user);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div
+            ref={backdropRef}
+            onClick={handleBackdropClick}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn"
+        >
+            <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl shadow-slate-900/20 p-8 relative animate-scaleIn">
+                {/* Botón cerrar */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600 transition-all"
+                >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+
+                {/* Header */}
+                <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/30">
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h2 className="text-2xl font-black text-slate-900 mb-1">Inicia sesión</h2>
+                    <p className="text-slate-500 text-sm">Ingresa con tu cuenta de negocio para completar el pago</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-1.5">Correo electrónico</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            autoFocus
+                            placeholder="tu@correo.com"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-1.5">Contraseña</label>
+                        <div className="relative">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                placeholder="Tu contraseña"
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm pr-12"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                            >
+                                {showPassword ? (
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" /></svg>
+                                ) : (
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+
+                    {error && (
+                        <div className="bg-red-50 border border-red-200 rounded-xl p-3 animate-shake">
+                            <p className="text-red-700 text-sm font-medium flex items-start gap-2">
+                                <svg className="w-4 h-4 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/></svg>
+                                {error}
+                            </p>
+                        </div>
+                    )}
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 hover:shadow-xl hover:shadow-blue-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none flex items-center justify-center gap-2 text-sm shadow-lg shadow-blue-600/25"
+                    >
+                        {loading ? (
+                            <>
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                Verificando...
+                            </>
+                        ) : (
+                            <>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
+                                Iniciar sesión y pagar
+                            </>
+                        )}
+                    </button>
+                </form>
+
+                <p className="text-center text-slate-400 text-xs mt-5">
+                    Pago procesado de forma segura por Mercado Pago
+                </p>
+            </div>
+
+            {/* CSS animations */}
+            <style>{`
+                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes scaleIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+                @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+                .animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+                .animate-scaleIn { animation: scaleIn 0.3s ease-out; }
+                .animate-shake { animation: shake 0.4s ease-out; }
+            `}</style>
+        </div>
+    );
+}
+
+/* ── Página Premium Principal ── */
+export default function PremiumPage() {
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [authToken, setAuthToken] = useState(null);
+    const [authUser, setAuthUser] = useState(null);
+    const [preferenceId, setPreferenceId] = useState(null);
+    const [paymentLoading, setPaymentLoading] = useState(false);
+    const [paymentError, setPaymentError] = useState(null);
+
+    // Tras login exitoso: cerrar modal y crear preferencia automáticamente
+    const handleLoginSuccess = async (token, user) => {
+        setAuthToken(token);
+        setAuthUser(user);
+        setShowLoginModal(false);
+        await createPreference(token);
+    };
+
+    const createPreference = async (token) => {
+        setPaymentLoading(true);
+        setPaymentError(null);
+
+        try {
+            const response = await fetch(`${API_URL}/payments/create-preference`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
             });
 
             const data = await response.json();
@@ -45,91 +230,160 @@ export default function PremiumPage() {
 
             setPreferenceId(data.preferenceId);
         } catch (err) {
-            setError(err.message);
+            setPaymentError(err.message);
         } finally {
-            setLoading(false);
+            setPaymentLoading(false);
+        }
+    };
+
+    const handleLogout = () => {
+        setAuthToken(null);
+        setAuthUser(null);
+        setPreferenceId(null);
+        setPaymentError(null);
+    };
+
+    // Botón CTA: si ya logueado abre pago, si no abre modal
+    const handlePayClick = () => {
+        if (authToken) {
+            createPreference(authToken);
+        } else {
+            setShowLoginModal(true);
         }
     };
 
     return (
         <Layout>
-            <div className="py-10 px-6">
-                <div className="max-w-2xl mx-auto">
-                    <div className="bg-white p-10 md:p-16 shadow-xl shadow-slate-200 rounded-3xl border border-slate-100">
-                        {/* Header */}
-                        <header className="text-center mb-10">
-                            <span className="inline-block bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border border-blue-100">
-                                Brumh Premium
-                            </span>
-                            <h1 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">
+            <div className="py-10 px-6 md:px-10">
+                <div className="max-w-7xl mx-auto">
+
+                    {/* Grid de 3 columnas */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+
+                        {/* -- Columna 1: Header + Benefits -- */}
+                        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/80">
+                            <h1 className="text-3xl font-black text-slate-900 mb-3 tracking-tight">
                                 Potencia tu negocio
                             </h1>
-                            <p className="text-slate-500 leading-relaxed max-w-md mx-auto">
+                            <p className="text-slate-500 leading-relaxed text-sm mb-8">
                                 Desbloquea todas las herramientas para hacer crecer tu taller en Brumh.
                             </p>
-                        </header>
 
-                        {/* Benefits */}
-                        <div className="space-y-4 mb-10">
-                            <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
-                                <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                                    <span className="text-blue-600 text-lg">✦</span>
+                            <div className="space-y-4">
+                                <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
+                                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                                        <span className="text-blue-600 text-lg">✦</span>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-slate-800 mb-1">Propuestas ilimitadas</h3>
+                                        <p className="text-sm text-slate-500">Responde a todas las solicitudes de servicio sin restricciones.</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-slate-800 mb-1">Propuestas ilimitadas</h3>
-                                    <p className="text-sm text-slate-500">Responde a todas las solicitudes de servicio sin restricciones.</p>
-                                </div>
-                            </div>
 
-                            <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
-                                <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                                    <span className="text-blue-600 text-lg">📊</span>
+                                <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
+                                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                                        <span className="text-blue-600 text-lg">📊</span>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-slate-800 mb-1">Visibilidad destacada</h3>
+                                        <p className="text-sm text-slate-500">Tu negocio aparece primero en los resultados de búsqueda.</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-slate-800 mb-1">Visibilidad destacada</h3>
-                                    <p className="text-sm text-slate-500">Tu negocio aparece primero en los resultados de búsqueda.</p>
-                                </div>
-                            </div>
 
-                            <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
-                                <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                                    <span className="text-blue-600 text-lg">⭐</span>
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-slate-800 mb-1">Badge Premium</h3>
-                                    <p className="text-sm text-slate-500">Genera más confianza con el sello verificado Premium.</p>
+                                <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
+                                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                                        <span className="text-blue-600 text-lg">⭐</span>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-slate-800 mb-1">Badge Premium</h3>
+                                        <p className="text-sm text-slate-500">Genera más confianza con el sello verificado Premium.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Pricing */}
-                        <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-8 rounded-2xl text-center mb-8">
-                            <p className="text-blue-200 text-sm font-semibold mb-2">Plan Mensual</p>
-                            <div className="flex items-baseline justify-center gap-1 mb-2">
-                                <span className="text-5xl font-black text-white">$9.990</span>
-                                <span className="text-blue-200 font-medium">/mes</span>
-                            </div>
-                            <p className="text-blue-200 text-sm">CLP · Sin compromiso, cancela cuando quieras</p>
-                        </div>
+                        {/* -- Columna 2: Planes + CTA / Pago -- */}
+                        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/80">
+                            <h2 className="text-2xl font-black text-slate-900 mb-5 text-center">Gratuito vs Premium</h2>
 
-                        {/* Payment Section */}
-                        <div className="space-y-4">
-                            {/* Si viene con providerId → mostrar Checkout de Mercado Pago */}
-                            {providerId ? (
-                                <div className="text-center space-y-4">
-                                    {loading && (
+                            <div className="grid grid-cols-2 gap-3 mb-6">
+                                {/* Plan Freemium */}
+                                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200">
+                                    <h4 className="font-bold text-slate-800 text-sm mb-0.5">Plan Freemium</h4>
+                                    <p className="text-[10px] text-slate-400 mb-2">Para empezar</p>
+                                    <ul className="space-y-1.5">
+                                        <li className="flex items-center gap-1.5 text-xs text-slate-600"><CheckIcon />Perfil visible</li>
+                                        <li className="flex items-center gap-1.5 text-xs text-slate-600"><CheckIcon />Aparecer en el mapa</li>
+                                        <li className="flex items-center gap-1.5 text-xs text-slate-600"><CheckIcon />Recibir reseñas</li>
+                                        <li className="flex items-center gap-1.5 text-xs text-slate-400"><CrossIcon />Propuestas limitadas</li>
+                                        <li className="flex items-center gap-1.5 text-xs text-slate-400"><CrossIcon />Sin badge verificado</li>
+                                    </ul>
+                                </div>
+
+                                {/* Plan Premium */}
+                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-4 text-white">
+                                    <h4 className="font-bold text-sm mb-0.5">Plan Premium</h4>
+                                    <p className="text-[10px] text-blue-200 mb-2">$9.990/mes CLP</p>
+                                    <ul className="space-y-1.5">
+                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />Todo lo gratuito</li>
+                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />Propuestas ilimitadas</li>
+                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />Visibilidad destacada</li>
+                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />Badge verificado</li>
+                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />30 días gratis</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Sección de pago / CTA */}
+                            {!authToken ? (
+                                <>
+                                    {/* Botón Pagar — abre modal de login */}
+                                    <button
+                                        onClick={handlePayClick}
+                                        className="group w-full relative overflow-hidden py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-2xl hover:from-blue-700 hover:to-blue-800 hover:shadow-2xl hover:shadow-blue-600/40 hover:-translate-y-1 active:translate-y-0 active:shadow-lg transition-all duration-300 text-base shadow-lg shadow-blue-600/25"
+                                    >
+                                        <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out"></span>
+                                        <span className="relative flex items-center justify-center gap-2">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                                            Pagar $9.990/mes
+                                        </span>
+                                    </button>
+                                    <p className="text-slate-400 text-xs text-center mt-3">Sin compromiso, cancela cuando quieras</p>
+                                </>
+                            ) : (
+                                <div>
+                                    {/* Usuario autenticado */}
+                                    <div className="flex items-center gap-3 mb-4 p-3 bg-green-50 border border-green-200 rounded-xl">
+                                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center shrink-0">
+                                            <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-green-800 text-sm font-semibold truncate">{authUser?.fullName || authUser?.email}</p>
+                                            <p className="text-green-600 text-xs">Sesión verificada</p>
+                                        </div>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="text-green-400 hover:text-green-600 transition-colors shrink-0"
+                                            title="Cambiar cuenta"
+                                        >
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                                        </button>
+                                    </div>
+
+                                    {/* Estado del pago */}
+                                    {paymentLoading && (
                                         <div className="flex items-center justify-center gap-3 py-6">
                                             <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                                             <p className="text-slate-500 text-sm">Preparando el pago...</p>
                                         </div>
                                     )}
 
-                                    {error && (
-                                        <div className="bg-red-50 border border-red-200 rounded-2xl p-4">
-                                            <p className="text-red-700 text-sm font-medium">{error}</p>
+                                    {paymentError && (
+                                        <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">
+                                            <p className="text-red-700 text-sm font-medium mb-2">{paymentError}</p>
                                             <button
-                                                onClick={handleCreatePreference}
-                                                className="mt-3 text-red-600 text-sm underline hover:text-red-800"
+                                                onClick={() => createPreference(authToken)}
+                                                className="text-red-600 text-sm font-semibold underline hover:text-red-800 transition-colors"
                                             >
                                                 Reintentar
                                             </button>
@@ -137,10 +391,8 @@ export default function PremiumPage() {
                                     )}
 
                                     {preferenceId && (
-                                        <div>
-                                            <p className="text-slate-500 text-sm mb-4">
-                                                Completa tu pago de forma segura con Mercado Pago:
-                                            </p>
+                                        <div className="text-center">
+                                            <p className="text-slate-500 text-sm mb-3">Completa tu pago de forma segura:</p>
                                             <Wallet
                                                 initialization={{ preferenceId }}
                                                 customization={{ texts: { valueProp: 'smart_option' } }}
@@ -148,73 +400,56 @@ export default function PremiumPage() {
                                         </div>
                                     )}
 
-                                    <p className="text-slate-400 text-xs pt-2">
+                                    <p className="text-slate-400 text-xs text-center mt-3">
                                         Pago procesado de forma segura por Mercado Pago
-                                    </p>
-                                </div>
-                            ) : (
-                                /* Sin providerId → mostrar contacto directo */
-                                <div className="text-center space-y-4">
-                                    <p className="text-slate-500 text-sm">
-                                        Para activar Premium, solicítalo desde la app de Brumh y recibirás un enlace de pago en tu correo. También puedes contactarnos directamente:
-                                    </p>
-
-                                    <a
-                                        href="mailto:soporte@brumh.cl?subject=Activar%20Brumh%20Premium"
-                                        className="block w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 text-center"
-                                    >
-                                        Contactar para activar
-                                    </a>
-
-                                    <a
-                                        href="https://wa.me/56912345678?text=Hola%2C%20quiero%20activar%20Brumh%20Premium"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="block w-full bg-green-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-green-500 transition-all text-center"
-                                    >
-                                        Escribir por WhatsApp
-                                    </a>
-
-                                    <p className="text-slate-400 text-xs pt-4">
-                                        Métodos de pago: Transferencia bancaria · WebPay · Mercado Pago
                                     </p>
                                 </div>
                             )}
                         </div>
 
-                        {/* FAQ */}
-                        <div className="mt-12 pt-8 border-t border-slate-100 space-y-6">
-                            <h2 className="text-lg font-bold text-slate-800">Preguntas Frecuentes</h2>
+                        {/* -- Columna 3: FAQ -- */}
+                        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/80">
+                            <h2 className="text-2xl font-black text-slate-900 mb-6">Preguntas Frecuentes</h2>
 
-                            <div>
-                                <h3 className="font-semibold text-slate-700 mb-1">¿Puedo probar Premium gratis?</h3>
-                                <p className="text-sm text-slate-500">Sí, desde la app puedes activar un período de prueba gratuito de 30 días sin necesidad de ingresar datos de pago.</p>
+                            <div className="space-y-5">
+                                <div>
+                                    <h3 className="font-semibold text-slate-700 mb-1">¿Puedo probar Premium gratis?</h3>
+                                    <p className="text-sm text-slate-500">Sí, desde la app puedes activar un período de prueba gratuito de 30 días sin necesidad de ingresar datos de pago.</p>
+                                </div>
+
+                                <div>
+                                    <h3 className="font-semibold text-slate-700 mb-1">¿Qué pasa al terminar el trial?</h3>
+                                    <p className="text-sm text-slate-500">Tu plan vuelve al modo gratuito automáticamente. No se realiza ningún cobro.</p>
+                                </div>
+
+                                <div>
+                                    <h3 className="font-semibold text-slate-700 mb-1">¿Cómo funciona el pago?</h3>
+                                    <p className="text-sm text-slate-500">Haz clic en pagar, inicia sesión con tu cuenta de negocio y completa el proceso seguro con Mercado Pago. Tu plan se activa al instante.</p>
+                                </div>
+
+                                <div>
+                                    <h3 className="font-semibold text-slate-700 mb-1">¿Puedo cancelar en cualquier momento?</h3>
+                                    <p className="text-sm text-slate-500">Sí, puedes cancelar tu suscripción Premium cuando quieras sin penalización.</p>
+                                </div>
                             </div>
 
-                            <div>
-                                <h3 className="font-semibold text-slate-700 mb-1">¿Qué pasa al terminar el trial?</h3>
-                                <p className="text-sm text-slate-500">Tu plan vuelve al modo gratuito automáticamente. No se realiza ningún cobro.</p>
-                            </div>
-
-                            <div>
-                                <h3 className="font-semibold text-slate-700 mb-1">¿Cómo funciona el pago?</h3>
-                                <p className="text-sm text-slate-500">Al solicitar Premium desde la app, recibes un correo con un enlace seguro de Mercado Pago. El pago se procesa al instante y tu plan se activa automáticamente.</p>
-                            </div>
-
-                            <div>
-                                <h3 className="font-semibold text-slate-700 mb-1">¿Puedo cancelar en cualquier momento?</h3>
-                                <p className="text-sm text-slate-500">Sí, puedes cancelar tu suscripción Premium cuando quieras sin penalización.</p>
+                            <div className="mt-8 pt-6 border-t border-slate-100">
+                                <p className="text-slate-400 text-xs">
+                                    Al contratar Premium aceptas nuestros <a href="/terminos" className="text-blue-600 hover:underline">Términos de Servicio</a> y <a href="/privacidad" className="text-blue-600 hover:underline">Política de Privacidad</a>.
+                                </p>
                             </div>
                         </div>
 
-                        <div className="mt-8 pt-6 border-t border-slate-100 text-center">
-                            <p className="text-slate-400 text-xs">
-                                Al contratar Premium aceptas nuestros <a href="/terminos" className="text-blue-600 hover:underline">Términos de Servicio</a> y <a href="/privacidad" className="text-blue-600 hover:underline">Política de Privacidad</a>.
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Modal de Login */}
+            <LoginModal
+                isOpen={showLoginModal}
+                onClose={() => setShowLoginModal(false)}
+                onLoginSuccess={handleLoginSuccess}
+            />
         </Layout>
     );
 }
