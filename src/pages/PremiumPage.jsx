@@ -71,7 +71,7 @@ function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                 throw new Error('Solo los proveedores pueden activar Premium. Inicia sesión con tu cuenta de negocio.');
             }
 
-            onLoginSuccess(data.access_token, data.user);
+            onLoginSuccess(data.access_token, data.user, data.provider);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -197,14 +197,16 @@ export default function PremiumPage() {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [authToken, setAuthToken] = useState(null);
     const [authUser, setAuthUser] = useState(null);
+    const [authProvider, setAuthProvider] = useState(null); // Datos del negocio
     const [preferenceId, setPreferenceId] = useState(null);
     const [paymentLoading, setPaymentLoading] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
 
     // Tras login exitoso: cerrar modal y crear preferencia automáticamente
-    const handleLoginSuccess = async (token, user) => {
+    const handleLoginSuccess = async (token, user, provider) => {
         setAuthToken(token);
         setAuthUser(user);
+        setAuthProvider(provider);
         setShowLoginModal(false);
         await createPreference(token);
     };
@@ -239,6 +241,7 @@ export default function PremiumPage() {
     const handleLogout = () => {
         setAuthToken(null);
         setAuthUser(null);
+        setAuthProvider(null);
         setPreferenceId(null);
         setPaymentError(null);
     };
@@ -352,14 +355,27 @@ export default function PremiumPage() {
                                 </>
                             ) : (
                                 <div>
-                                    {/* Usuario autenticado */}
+                                    {/* Negocio autenticado */}
                                     <div className="flex items-center gap-3 mb-4 p-3 bg-green-50 border border-green-200 rounded-xl">
-                                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center shrink-0">
-                                            <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
-                                        </div>
+                                        {authProvider?.logoUrl ? (
+                                            <img
+                                                src={authProvider.logoUrl}
+                                                alt={authProvider.businessName}
+                                                className="w-10 h-10 rounded-xl object-cover border border-green-200 shrink-0"
+                                            />
+                                        ) : (
+                                            <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
+                                                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                            </div>
+                                        )}
                                         <div className="min-w-0 flex-1">
-                                            <p className="text-green-800 text-sm font-semibold truncate">{authUser?.fullName || authUser?.email}</p>
-                                            <p className="text-green-600 text-xs">Sesión verificada</p>
+                                            <p className="text-green-800 text-sm font-semibold truncate">
+                                                {authProvider?.businessName || authUser?.fullName || authUser?.email}
+                                            </p>
+                                            <p className="text-green-600 text-xs flex items-center gap-1">
+                                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+                                                Sesión verificada
+                                            </p>
                                         </div>
                                         <button
                                             onClick={handleLogout}
