@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import Layout from '../components/Layout';
 
@@ -194,6 +195,9 @@ function LoginModal({ isOpen, onClose, onLoginSuccess }) {
 
 /* ── Página Premium Principal ── */
 export default function PremiumPage() {
+    const [searchParams] = useSearchParams();
+    const urlProviderId = searchParams.get('providerId'); // Viene del email
+
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [authToken, setAuthToken] = useState(null);
     const [authUser, setAuthUser] = useState(null);
@@ -201,17 +205,53 @@ export default function PremiumPage() {
     const [preferenceId, setPreferenceId] = useState(null);
     const [paymentLoading, setPaymentLoading] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
+    const [emailFlowReady, setEmailFlowReady] = useState(false); // Flujo desde email activo
 
-    // Tras login exitoso: cerrar modal y crear preferencia automáticamente
+    // Flujo EMAIL: si viene providerId en la URL, crear preferencia directamente sin login
+    useEffect(() => {
+        if (urlProviderId && !preferenceId && !paymentLoading && !emailFlowReady) {
+            setEmailFlowReady(true);
+            createPreferenceDirect(urlProviderId);
+        }
+    }, [urlProviderId]);
+
+    // Crear preferencia SIN login (flujo email con providerId en URL)
+    const createPreferenceDirect = async (providerId) => {
+        setPaymentLoading(true);
+        setPaymentError(null);
+
+        try {
+            const response = await fetch(`${API_URL}/payments/create-preference-direct`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ providerId: Number(providerId) }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Error al crear la preferencia de pago');
+            }
+
+            setPreferenceId(data.preferenceId);
+        } catch (err) {
+            setPaymentError(err.message);
+        } finally {
+            setPaymentLoading(false);
+        }
+    };
+
+    // Tras login exitoso: cerrar modal y crear preferencia con JWT
     const handleLoginSuccess = async (token, user, provider) => {
         setAuthToken(token);
         setAuthUser(user);
         setAuthProvider(provider);
         setShowLoginModal(false);
-        await createPreference(token);
+        await createPreferenceWithAuth(token);
     };
 
-    const createPreference = async (token) => {
+    // Crear preferencia CON login (flujo web con JWT)
+    const createPreferenceWithAuth = async (token) => {
         setPaymentLoading(true);
         setPaymentError(null);
 
@@ -249,11 +289,14 @@ export default function PremiumPage() {
     // Botón CTA: si ya logueado abre pago, si no abre modal
     const handlePayClick = () => {
         if (authToken) {
-            createPreference(authToken);
+            createPreferenceWithAuth(authToken);
         } else {
             setShowLoginModal(true);
         }
     };
+
+    // Determinar si mostrar el Wallet directamente (flujo email o ya autenticado)
+    const showWalletDirect = emailFlowReady || authToken;
 
     return (
         <Layout>
@@ -338,7 +381,7 @@ export default function PremiumPage() {
                             </div>
 
                             {/* Sección de pago / CTA */}
-                            {!authToken ? (
+                            {!showWalletDirect ? (
                                 <>
                                     {/* Botón Pagar — abre modal de login */}
                                     <button
@@ -355,36 +398,48 @@ export default function PremiumPage() {
                                 </>
                             ) : (
                                 <div>
-                                    {/* Negocio autenticado */}
-                                    <div className="flex items-center gap-3 mb-4 p-3 bg-green-50 border border-green-200 rounded-xl">
-                                        {authProvider?.logoUrl ? (
-                                            <img
-                                                src={authProvider.logoUrl}
-                                                alt={authProvider.businessName}
-                                                className="w-10 h-10 rounded-xl object-cover border border-green-200 shrink-0"
-                                            />
-                                        ) : (
-                                            <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
-                                                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                    {/* Info de sesión: si vino por login muestra negocio, si vino por email muestra badge */}
+                                    {authToken ? (
+                                        <div className="flex items-center gap-3 mb-4 p-3 bg-green-50 border border-green-200 rounded-xl">
+                                            {authProvider?.logoUrl ? (
+                                                <img
+                                                    src={authProvider.logoUrl}
+                                                    alt={authProvider.businessName}
+                                                    className="w-10 h-10 rounded-xl object-cover border border-green-200 shrink-0"
+                                                />
+                                            ) : (
+                                                <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
+                                                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                                </div>
+                                            )}
+                                            <div className="min-w-0 flex-1">
+                                                <p className="text-green-800 text-sm font-semibold truncate">
+                                                    {authProvider?.businessName || authUser?.fullName || authUser?.email}
+                                                </p>
+                                                <p className="text-green-600 text-xs flex items-center gap-1">
+                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+                                                    Sesión verificada
+                                                </p>
                                             </div>
-                                        )}
-                                        <div className="min-w-0 flex-1">
-                                            <p className="text-green-800 text-sm font-semibold truncate">
-                                                {authProvider?.businessName || authUser?.fullName || authUser?.email}
-                                            </p>
-                                            <p className="text-green-600 text-xs flex items-center gap-1">
-                                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
-                                                Sesión verificada
-                                            </p>
+                                            <button
+                                                onClick={handleLogout}
+                                                className="text-green-400 hover:text-green-600 transition-colors shrink-0"
+                                                title="Cambiar cuenta"
+                                            >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                                            </button>
                                         </div>
-                                        <button
-                                            onClick={handleLogout}
-                                            className="text-green-400 hover:text-green-600 transition-colors shrink-0"
-                                            title="Cambiar cuenta"
-                                        >
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                                        </button>
-                                    </div>
+                                    ) : emailFlowReady && (
+                                        <div className="flex items-center gap-3 mb-4 p-3 bg-blue-50 border border-blue-200 rounded-xl">
+                                            <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                                                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                            </div>
+                                            <div className="min-w-0 flex-1">
+                                                <p className="text-blue-800 text-sm font-semibold">Pago desde correo electrónico</p>
+                                                <p className="text-blue-600 text-xs">Enlace verificado automáticamente</p>
+                                            </div>
+                                        </div>
+                                    )}
 
                                     {/* Estado del pago */}
                                     {paymentLoading && (
@@ -398,7 +453,7 @@ export default function PremiumPage() {
                                         <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">
                                             <p className="text-red-700 text-sm font-medium mb-2">{paymentError}</p>
                                             <button
-                                                onClick={() => createPreference(authToken)}
+                                                onClick={() => emailFlowReady ? createPreferenceDirect(urlProviderId) : createPreferenceWithAuth(authToken)}
                                                 className="text-red-600 text-sm font-semibold underline hover:text-red-800 transition-colors"
                                             >
                                                 Reintentar
