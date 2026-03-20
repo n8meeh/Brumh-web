@@ -6,17 +6,19 @@ export default function AboutPage() {
         <Layout>
             <div className="py-10 px-6">
                 <div className="max-w-4xl mx-auto">
-                    {/* Header */}
-                    <header className="text-center mb-12">
-                        <span className="inline-block bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border border-blue-100">
-                            Conoce Brumh
-                        </span>
-                        <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">
-                            ¿Cómo funciona Brumh?
-                        </h1>
-                        <p className="text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                            Una plataforma que conecta a dueños de vehículos con los mejores talleres y servicios automotrices de su zona.
-                        </p>
+                    <header className="text-center mb-16 relative overflow-hidden py-10 rounded-[3rem] premium-gradient text-white shadow-2xl">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 blur-[100px] rounded-full"></div>
+                        <div className="relative z-10">
+                            <span className="inline-block bg-blue-500/10 text-blue-400 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-6 border border-blue-500/20">
+                                Guía del Ecosistema
+                            </span>
+                            <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+                                ¿Cómo funciona <span className="text-blue-400 underline decoration-blue-400/30">Brumh</span>?
+                            </h1>
+                            <p className="text-slate-400 max-w-2xl mx-auto leading-relaxed text-lg font-medium">
+                                Una plataforma tecnológica de alto rendimiento que conecta a dueños de vehículos con los líderes del servicio automotriz.
+                            </p>
+                        </div>
                     </header>
 
                     {/* Para Usuarios */}
@@ -34,65 +36,39 @@ export default function AboutPage() {
                                 Si tienes un vehículo y necesitas un servicio automotriz, Brumh te facilita encontrar el taller ideal cerca de ti.
                             </p>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                <div className="relative">
-                                    <div className="bg-slate-50 rounded-2xl p-5">
-                                        <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white text-sm font-bold rounded-lg mb-3">1</span>
-                                        <h3 className="font-bold text-slate-800 mb-1.5">Descarga la App</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                {[
+                                    { n: '1', t: 'Descarga y Perfil', d: 'Regístrate y añade tu vehículo para llevar un control detallado y encontrar servicios a medida.' },
+                                    { n: '2', t: 'Busca y Contacta', d: 'Explora el mapa, descubre negocios cercanos y contáctalos por la app o redes sociales.' },
+                                    { n: '3', t: 'Bitácora de Vida', d: 'Registra cada mantención y repuesto automáticamente. ¡Tu auto siempre al día!' },
+                                    { n: '4', t: 'Comunidad Activa', d: 'Resuelve dudas, comparte consejos y ayuda a otros para ganar reputación de experto.' },
+                                ].map((s) => (
+                                    <div key={s.n} className="bg-slate-50 rounded-2xl p-5 border border-slate-100 hover:border-blue-200 transition-colors">
+                                        <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white text-sm font-bold rounded-lg mb-3">{s.n}</span>
+                                        <h3 className="font-bold text-slate-800 mb-1.5">{s.t}</h3>
                                         <p className="text-sm text-slate-500 leading-relaxed">
-                                            Descarga Brumh gratis en tu dispositivo y crea tu cuenta en segundos.
+                                            {s.d}
                                         </p>
                                     </div>
-                                </div>
-
-                                <div className="relative">
-                                    <div className="bg-slate-50 rounded-2xl p-5">
-                                        <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white text-sm font-bold rounded-lg mb-3">2</span>
-                                        <h3 className="font-bold text-slate-800 mb-1.5">Busca servicios</h3>
-                                        <p className="text-sm text-slate-500 leading-relaxed">
-                                            Activa tu ubicación y descubre talleres, mecánicos y servicios cercanos a ti.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="relative">
-                                    <div className="bg-slate-50 rounded-2xl p-5">
-                                        <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white text-sm font-bold rounded-lg mb-3">3</span>
-                                        <h3 className="font-bold text-slate-800 mb-1.5">Contacta directo</h3>
-                                        <p className="text-sm text-slate-500 leading-relaxed">
-                                            Comunícate por WhatsApp, teléfono o redes sociales sin intermediarios.
-                                        </p>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
 
                             <div className="mt-6 bg-blue-50 rounded-2xl p-5 border border-blue-100">
                                 <h3 className="font-bold text-blue-900 mb-2">Funciones destacadas</h3>
-                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    <li className="flex items-center gap-2 text-sm text-blue-800">
-                                        <svg className="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                        Geolocalización en tiempo real
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm text-blue-800">
-                                        <svg className="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                        Reseñas verificadas de la comunidad
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm text-blue-800">
-                                        <svg className="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                        Mapa interactivo con talleres
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm text-blue-800">
-                                        <svg className="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                        Comunidad automotriz activa
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm text-blue-800">
-                                        <svg className="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                        100% gratis para usuarios
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm text-blue-800">
-                                        <svg className="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                        Solicitudes de servicio directas
-                                    </li>
+                                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                                    {[
+                                        'Geolocalización en tiempo real',
+                                        'Bitácora de vida automática',
+                                        'Mapa interactivo',
+                                        'Comunidad y Foros',
+                                        '100% gratis para usuarios',
+                                        'Reseñas y Calificaciones'
+                                    ].map((f) => (
+                                        <li key={f} className="flex items-center gap-2 text-sm text-blue-800">
+                                            <svg className="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                            {f}
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
                         </div>
@@ -113,36 +89,21 @@ export default function AboutPage() {
                                 Si tienes un taller, servicio técnico o negocio automotriz, Brumh te ayuda a llegar a más clientes en tu zona.
                             </p>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                <div className="relative">
-                                    <div className="bg-slate-50 rounded-2xl p-5">
-                                        <span className="inline-flex items-center justify-center w-8 h-8 bg-slate-800 text-white text-sm font-bold rounded-lg mb-3">1</span>
-                                        <h3 className="font-bold text-slate-800 mb-1.5">Registra tu negocio</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                {[
+                                    { n: '1', t: 'Crea tu Vitrina', d: 'Registra tu negocio con logo y ubicación para ser visible ante miles de usuarios locales.' },
+                                    { n: '2', t: 'Capta Clientes', d: 'Recibe consultas directas o busca proactivamente en los posts de la comunidad.' },
+                                    { n: '3', t: 'Gestiona tu Equipo', d: 'Organiza a tus empleados y mejora la experiencia de atención para fidelizar clientes.' },
+                                    { n: '4', t: 'Fama y Confianza', d: 'Gana reseñas reales y ofrece soluciones técnicas para destacar como experto.' },
+                                ].map((s) => (
+                                    <div key={s.n} className="bg-slate-50 rounded-2xl p-5 border border-slate-100 hover:border-slate-300 transition-colors">
+                                        <span className="inline-flex items-center justify-center w-8 h-8 bg-slate-800 text-white text-sm font-bold rounded-lg mb-3">{s.n}</span>
+                                        <h3 className="font-bold text-slate-800 mb-1.5">{s.t}</h3>
                                         <p className="text-sm text-slate-500 leading-relaxed">
-                                            Crea tu cuenta y registra tu taller con logo, portada, ubicación y datos de contacto.
+                                            {s.d}
                                         </p>
                                     </div>
-                                </div>
-
-                                <div className="relative">
-                                    <div className="bg-slate-50 rounded-2xl p-5">
-                                        <span className="inline-flex items-center justify-center w-8 h-8 bg-slate-800 text-white text-sm font-bold rounded-lg mb-3">2</span>
-                                        <h3 className="font-bold text-slate-800 mb-1.5">Aparece en el mapa</h3>
-                                        <p className="text-sm text-slate-500 leading-relaxed">
-                                            Tu negocio se muestra a usuarios cercanos que buscan servicios como los tuyos.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="relative">
-                                    <div className="bg-slate-50 rounded-2xl p-5">
-                                        <span className="inline-flex items-center justify-center w-8 h-8 bg-slate-800 text-white text-sm font-bold rounded-lg mb-3">3</span>
-                                        <h3 className="font-bold text-slate-800 mb-1.5">Recibe clientes</h3>
-                                        <p className="text-sm text-slate-500 leading-relaxed">
-                                            Los usuarios te contactan directamente por WhatsApp, teléfono o redes sociales.
-                                        </p>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
 
                             <div className="mt-6 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-5 text-white">
@@ -177,54 +138,51 @@ export default function AboutPage() {
                                     <p className="text-xs text-slate-400 mb-4">Para empezar</p>
                                     <ul className="space-y-2.5">
                                         <li className="flex items-center gap-2 text-sm text-slate-600">
-                                            <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                            Perfil de negocio visible
+                                            <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                            Perfil y Reseñas
                                         </li>
                                         <li className="flex items-center gap-2 text-sm text-slate-600">
-                                            <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                            Aparecer en el mapa
+                                            <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                            3 posts y 5 comentarios
                                         </li>
                                         <li className="flex items-center gap-2 text-sm text-slate-600">
-                                            <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                            Recibir reseñas
+                                            <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                            2 propuestas de trabajo
                                         </li>
-                                        <li className="flex items-center gap-2 text-sm text-slate-400">
-                                            <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/></svg>
-                                            Propuestas limitadas
+                                        <li className="flex items-center gap-2 text-sm text-slate-600">
+                                            <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                            7 servicios y 10 productos
                                         </li>
-                                        <li className="flex items-center gap-2 text-sm text-slate-400">
-                                            <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/></svg>
-                                            Sin badge verificado
-                                        </li>
+                                        <li className="flex items-center gap-3 text-sm font-semibold text-slate-400"><CrossIcon />Gestión de equipo y Dashboard</li>
                                     </ul>
                                 </div>
 
-                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 text-white relative overflow-hidden">
-                                    <div className="absolute top-3 right-3 bg-white/20 text-white text-xs font-bold px-2.5 py-1 rounded-lg">
+                                <div className="relative overflow-hidden premium-gradient rounded-[2rem] p-8 text-white shadow-2xl shadow-blue-900/40 border border-white/10 group transition-all">
+                                    <div className="absolute top-0 right-3 bg-white/20 text-white text-[10px] font-black px-3 py-1 rounded-bl-xl border-l border-b border-white/10 tracking-widest uppercase">
                                         Recomendado
                                     </div>
-                                    <h3 className="font-bold mb-1">Plan Premium</h3>
-                                    <p className="text-xs text-blue-200 mb-4">$9.990/mes CLP</p>
-                                    <ul className="space-y-2.5">
-                                        <li className="flex items-center gap-2 text-sm">
-                                            <svg className="w-4 h-4 text-blue-200 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                            Todo lo del plan gratuito
+                                    <div className="mb-6">
+                                      <h3 className="text-xl font-black mb-1 tracking-wider uppercase">Plan Premium</h3>
+                                      <p className="text-xs text-blue-300 font-bold">$9.990 / mes CLP</p>
+                                    </div>
+                                    <ul className="space-y-4">
+                                        <li className="flex items-center gap-3 text-sm font-semibold">
+                                            <CheckIcon /> Todo Ilimitado
                                         </li>
-                                        <li className="flex items-center gap-2 text-sm">
-                                            <svg className="w-4 h-4 text-blue-200 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                            Propuestas ilimitadas
+                                        <li className="flex items-center gap-3 text-sm font-semibold">
+                                            <CheckIcon /> Gestión de Equipo
                                         </li>
-                                        <li className="flex items-center gap-2 text-sm">
-                                            <svg className="w-4 h-4 text-blue-200 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                            Visibilidad destacada
+                                        <li className="flex items-center gap-3 text-sm font-semibold">
+                                            <CheckIcon /> Dashboard Avanzado
                                         </li>
-                                        <li className="flex items-center gap-2 text-sm">
-                                            <svg className="w-4 h-4 text-blue-200 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                            Badge Premium verificado
+                                        <li className="flex items-center gap-3 text-sm font-semibold">
+                                            <CheckIcon /> Visibilidad destacada
                                         </li>
-                                        <li className="flex items-center gap-2 text-sm">
-                                            <svg className="w-4 h-4 text-blue-200 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-                                            30 días gratis de prueba
+                                        <li className="flex items-center gap-3 text-sm font-semibold">
+                                            <CheckIcon /> Badge Premium verificado
+                                        </li>
+                                        <li className="flex items-center gap-3 text-sm font-semibold">
+                                            <CheckIcon /> 30 días gratis de prueba
                                         </li>
                                     </ul>
                                 </div>

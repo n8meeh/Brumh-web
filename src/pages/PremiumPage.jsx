@@ -11,11 +11,15 @@ if (mpPublicKey) {
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://brumh.cl/api';
 
-const CheckIcon = ({ color = 'text-green-500' }) => (
-    <svg className={`w-4 h-4 ${color} shrink-0`} fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+const CheckIcon = ({ color = 'text-blue-500' }) => (
+    <div className={`w-5 h-5 ${color} bg-current/10 rounded-full flex items-center justify-center shrink-0`}>
+        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+    </div>
 );
 const CrossIcon = () => (
-    <svg className="w-4 h-4 text-slate-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/></svg>
+    <div className="w-5 h-5 text-slate-300 bg-current/10 rounded-full flex items-center justify-center shrink-0">
+        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+    </div>
 );
 
 /* ── Modal de Login ── */
@@ -150,7 +154,7 @@ function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                     {error && (
                         <div className="bg-red-50 border border-red-200 rounded-xl p-3 animate-shake">
                             <p className="text-red-700 text-sm font-medium flex items-start gap-2">
-                                <svg className="w-4 h-4 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/></svg>
+                                <svg className="w-4 h-4 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
                                 {error}
                             </p>
                         </div>
@@ -307,75 +311,85 @@ export default function PremiumPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
 
                         {/* -- Columna 1: Header + Benefits -- */}
-                        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/80">
-                            <h1 className="text-3xl font-black text-slate-900 mb-3 tracking-tight">
-                                Potencia tu negocio
-                            </h1>
-                            <p className="text-slate-500 leading-relaxed text-sm mb-8">
-                                Desbloquea todas las herramientas para hacer crecer tu taller en Brumh.
-                            </p>
+                        <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50 flex flex-col justify-between">
+                            <div>
+                                <h1 className="text-4xl font-black text-slate-900 mb-4 tracking-tight leading-tight text-balance">
+                                    Potencia tu negocio al <span className="text-blue-600 underline decoration-blue-500/30 underline-offset-8">máximo</span>.
+                                </h1>
+                                <p className="text-slate-500 leading-relaxed font-medium mb-10 text-justify text-sm">
+                                    Desbloquea las herramientas críticas para liderar el mercado automotriz local y conectar con miles de clientes.
+                                </p>
+                            </div>
 
                             <div className="space-y-4">
-                                <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
-                                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                                        <span className="text-blue-600 text-lg">✦</span>
+                                <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-3xl border border-slate-100/50 hover:bg-white hover:shadow-xl hover:shadow-blue-600/5 transition-all duration-300">
+                                    <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center shrink-0 shadow-sm shadow-blue-200">
+                                        <span className="text-blue-600 text-xl">🚀</span>
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-slate-800 mb-1">Propuestas ilimitadas</h3>
-                                        <p className="text-sm text-slate-500">Responde a todas las solicitudes de servicio sin restricciones.</p>
+                                        <h3 className="font-black text-slate-800 mb-1 leading-tight uppercase tracking-wide text-xs">Crecimiento sin límites</h3>
+                                        <p className="text-xs text-slate-500 font-medium leading-relaxed">Publicaciones, comentarios y solicitudes ilimitadas.</p>
                                     </div>
                                 </div>
 
-                                <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
-                                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                                        <span className="text-blue-600 text-lg">📊</span>
+                                <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-3xl border border-slate-100/50 hover:bg-white hover:shadow-xl hover:shadow-blue-600/5 transition-all duration-300">
+                                    <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center shrink-0 shadow-sm shadow-blue-200">
+                                        <span className="text-blue-600 text-xl">👥</span>
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-slate-800 mb-1">Visibilidad destacada</h3>
-                                        <p className="text-sm text-slate-500">Tu negocio aparece primero en los resultados de búsqueda.</p>
+                                        <h3 className="font-black text-slate-800 mb-1 leading-tight uppercase tracking-wide text-xs">Gestión de Equipo</h3>
+                                        <p className="text-xs text-slate-500 font-medium leading-relaxed">Administra empleados y organiza el trabajo eficientemente.</p>
                                     </div>
                                 </div>
 
-                                <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl">
-                                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                                        <span className="text-blue-600 text-lg">⭐</span>
+                                <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-3xl border border-slate-100/50 hover:bg-white hover:shadow-xl hover:shadow-blue-600/5 transition-all duration-300">
+                                    <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center shrink-0 shadow-sm shadow-blue-200">
+                                        <span className="text-blue-600 text-xl">📈</span>
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-slate-800 mb-1">Badge Premium</h3>
-                                        <p className="text-sm text-slate-500">Genera más confianza con el sello verificado Premium.</p>
+                                        <h3 className="font-black text-slate-800 mb-1 leading-tight uppercase tracking-wide text-xs">Dashboard Pro</h3>
+                                        <p className="text-xs text-slate-500 font-medium leading-relaxed">Accede a estadísticas avanzadas de rendimiento.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* -- Columna 2: Planes + CTA / Pago -- */}
-                        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/80">
-                            <h2 className="text-2xl font-black text-slate-900 mb-5 text-center">Gratuito vs Premium</h2>
+                        <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50 flex flex-col items-center">
+                            <h2 className="text-2xl font-black text-slate-900 mb-8 text-center uppercase tracking-widest text-xs opacity-50">Comparativa de Planes</h2>
 
-                            <div className="grid grid-cols-2 gap-3 mb-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                                 {/* Plan Freemium */}
-                                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200">
-                                    <h4 className="font-bold text-slate-800 text-sm mb-0.5">Plan Freemium</h4>
-                                    <p className="text-[10px] text-slate-400 mb-2">Para empezar</p>
-                                    <ul className="space-y-1.5">
-                                        <li className="flex items-center gap-1.5 text-xs text-slate-600"><CheckIcon />Perfil visible</li>
-                                        <li className="flex items-center gap-1.5 text-xs text-slate-600"><CheckIcon />Aparecer en el mapa</li>
-                                        <li className="flex items-center gap-1.5 text-xs text-slate-600"><CheckIcon />Recibir reseñas</li>
-                                        <li className="flex items-center gap-1.5 text-xs text-slate-400"><CrossIcon />Propuestas limitadas</li>
-                                        <li className="flex items-center gap-1.5 text-xs text-slate-400"><CrossIcon />Sin badge verificado</li>
+                                <div className="bg-slate-50/80 backdrop-blur-sm rounded-[2rem] p-6 border border-slate-200/50 shadow-inner">
+                                    <div className="mb-4 text-center sm:text-left">
+                                      <h4 className="text-lg font-black text-slate-900 mb-0.5 uppercase tracking-wider">Freemium</h4>
+                                      <p className="text-[11px] font-bold text-slate-400">PLAN INICIAL</p>
+                                    </div>
+                                    <ul className="space-y-3">
+                                        <li className="flex items-center gap-3 text-xs font-semibold text-slate-600"><CheckIcon color="text-slate-400" />3 posts y 5 comentarios</li>
+                                        <li className="flex items-center gap-3 text-xs font-semibold text-slate-600"><CheckIcon color="text-slate-400" />2 propuestas de trabajo</li>
+                                        <li className="flex items-center gap-3 text-xs font-semibold text-slate-600"><CheckIcon color="text-slate-400" />7 servicios y 10 productos</li>
+                                        <li className="flex items-center gap-3 text-xs font-semibold text-slate-400"><CrossIcon />Gestión de equipo</li>
+                                        <li className="flex items-center gap-3 text-xs font-semibold text-slate-400"><CrossIcon />Dashboard Premium</li>
                                     </ul>
                                 </div>
 
                                 {/* Plan Premium */}
-                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-4 text-white">
-                                    <h4 className="font-bold text-sm mb-0.5">Plan Premium</h4>
-                                    <p className="text-[10px] text-blue-200 mb-2">$9.990/mes CLP</p>
-                                    <ul className="space-y-1.5">
-                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />Todo lo gratuito</li>
-                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />Propuestas ilimitadas</li>
-                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />Visibilidad destacada</li>
-                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />Badge verificado</li>
-                                        <li className="flex items-center gap-1.5 text-xs"><CheckIcon color="text-blue-200" />30 días gratis</li>
+                                <div className="relative overflow-hidden premium-gradient rounded-[2rem] p-6 text-white shadow-2xl shadow-blue-900/40 border border-white/10 group active:scale-[0.98] transition-all">
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/20 blur-2xl rounded-full"></div>
+                                    <div className="relative z-10 mb-4 text-center sm:text-left">
+                                      <div className="flex items-center justify-between mb-0.5">
+                                        <h4 className="text-lg font-black uppercase tracking-wider">Premium</h4>
+                                        <span className="bg-blue-500 text-[10px] font-black px-2 py-0.5 rounded-lg border border-white/20">PRO</span>
+                                      </div>
+                                      <p className="text-[11px] font-bold text-blue-300">$9.990 / mes</p>
+                                    </div>
+                                    <ul className="relative z-10 space-y-3">
+                                        <li className="flex items-center gap-3 text-xs font-semibold"><CheckIcon color="text-blue-400" />Todo Ilimitado</li>
+                                        <li className="flex items-center gap-3 text-xs font-semibold"><CheckIcon color="text-blue-400" />Gestión de Equipo</li>
+                                        <li className="flex items-center gap-3 text-xs font-semibold"><CheckIcon color="text-blue-400" />Dashboard Pro</li>
+                                        <li className="flex items-center gap-3 text-xs font-semibold"><CheckIcon color="text-blue-400" />Visibilidad destacada</li>
+                                        <li className="flex items-center gap-3 text-xs font-semibold"><CheckIcon color="text-blue-400" />Badge verificado</li>
                                     </ul>
                                 </div>
                             </div>
@@ -394,7 +408,6 @@ export default function PremiumPage() {
                                             Pagar $9.990/mes
                                         </span>
                                     </button>
-                                    <p className="text-slate-400 text-xs text-center mt-3">Sin compromiso, cancela cuando quieras</p>
                                 </>
                             ) : (
                                 <div>
@@ -417,7 +430,7 @@ export default function PremiumPage() {
                                                     {authProvider?.businessName || authUser?.fullName || authUser?.email}
                                                 </p>
                                                 <p className="text-green-600 text-xs flex items-center gap-1">
-                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                                                     Sesión verificada
                                                 </p>
                                             </div>
@@ -496,11 +509,6 @@ export default function PremiumPage() {
                                 <div>
                                     <h3 className="font-semibold text-slate-700 mb-1">¿Cómo funciona el pago?</h3>
                                     <p className="text-sm text-slate-500">Haz clic en pagar, inicia sesión con tu cuenta de negocio y completa el proceso seguro con Mercado Pago. Tu plan se activa al instante.</p>
-                                </div>
-
-                                <div>
-                                    <h3 className="font-semibold text-slate-700 mb-1">¿Puedo cancelar en cualquier momento?</h3>
-                                    <p className="text-sm text-slate-500">Sí, puedes cancelar tu suscripción Premium cuando quieras sin penalización.</p>
                                 </div>
                             </div>
 
