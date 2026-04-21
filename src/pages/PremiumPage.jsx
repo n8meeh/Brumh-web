@@ -212,19 +212,35 @@ export default function PremiumPage() {
                                         </ul>
 
                                         <div className="relative">
+                                            {authProvider && (
+                                                <div className="mb-6 flex flex-col items-center justify-center p-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 shadow-inner group-hover:bg-white/10 transition-all">
+                                                    {authProvider.logoUrl ? (
+                                                        <img src={authProvider.logoUrl} alt={authProvider.businessName} className="w-16 h-16 rounded-full object-cover mb-3 shadow-lg border-2 border-white/20" />
+                                                    ) : (
+                                                        <div className="w-16 h-16 rounded-full bg-blue-600/50 flex items-center justify-center mb-3 text-white font-bold text-xl border-2 border-white/20">
+                                                            {authProvider.businessName?.charAt(0)?.toUpperCase() || 'N'}
+                                                        </div>
+                                                    )}
+                                                    <p className="text-white font-bold text-center tracking-wide">{authProvider.businessName}</p>
+                                                    <span className="text-blue-300 text-[10px] uppercase font-bold tracking-widest mt-1">Sesión Iniciada</span>
+                                                </div>
+                                            )}
+
                                             {!(emailFlowReady || authToken) ? (
                                                 <button onClick={() => setShowLoginModal(true)} className="w-full py-5 bg-white text-blue-900 font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl uppercase tracking-widest text-xs">
                                                     Activar Ahora
                                                 </button>
                                             ) : (
-                                                <div className="bg-white/10 backdrop-blur-xl p-4 rounded-2xl border border-white/20">
+                                                <div className="w-full">
                                                     {paymentLoading ? (
                                                         <div className="flex flex-col items-center py-4 gap-3">
                                                             <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                                                            <span className="text-[10px] font-bold uppercase tracking-widest">Sincronizando...</span>
+                                                            <span className="text-[10px] font-bold uppercase tracking-widest text-white">Sincronizando...</span>
                                                         </div>
                                                     ) : preferenceId ? (
-                                                        <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />
+                                                        <div className="w-full overflow-hidden rounded-xl">
+                                                            <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />
+                                                        </div>
                                                     ) : (
                                                         <p className="text-center text-xs font-bold text-red-200 py-4 uppercase tracking-tighter">{paymentError || "Error técnico"}</p>
                                                     )}
