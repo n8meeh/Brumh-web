@@ -229,15 +229,17 @@ export default function PaymentResultPage({ status }) {
                         )}
 
                         {/* Acciones comunes */}
-                        <div className="flex flex-col sm:flex-row gap-3">
+                        <div className="flex flex-col items-center gap-4">
                             <Link
                                 to="/"
-                                className="flex-1 flex items-center justify-center gap-2 py-3 bg-white text-slate-700 font-semibold rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all text-sm"
+                                className="w-full flex items-center justify-center gap-2 py-3 bg-white text-slate-700 font-bold rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all text-sm shadow-sm"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
                                 Ir al inicio
                             </Link>
-                            <p className="text-center text-slate-400 text-xs mt-6">Si tienes problemas con tu pago, envia un correo electronico a contactobrumh@gmail.com</p>
+                            <p className="text-center text-slate-500 text-xs max-w-sm px-4">
+                                Si tienes problemas con tu pago, envía un correo electrónico a <span className="font-bold text-slate-700">contactobrumh@gmail.com</span>
+                            </p>
                         </div>
                     </div>
 

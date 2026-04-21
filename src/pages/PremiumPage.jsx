@@ -101,6 +101,7 @@ export default function PremiumPage() {
 
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [authToken, setAuthToken] = useState(null);
+    const [authUser, setAuthUser] = useState(null);
     const [authProvider, setAuthProvider] = useState(null);
     const [preferenceId, setPreferenceId] = useState(null);
     const [paymentLoading, setPaymentLoading] = useState(false);
@@ -130,9 +131,15 @@ export default function PremiumPage() {
 
     const handleLoginSuccess = async (token, user, provider) => {
         setAuthToken(token);
+        setAuthUser(user);
         setAuthProvider(provider);
         setShowLoginModal(false);
-        await createPreferenceWithAuth(token);
+        
+        if (user.role === 'provider' || user.role === 'provider_admin') {
+            await createPreferenceWithAuth(token);
+        } else {
+            setPaymentError("No posees un negocio o tu rol no te permite completar esta transacción.");
+        }
     };
 
     const createPreferenceWithAuth = async (token) => {
@@ -251,7 +258,11 @@ export default function PremiumPage() {
                                                             <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: 'smart_option' }, visual: { valuePropColor: 'white', borderRadius: '16px' } }} />
                                                         </div>
                                                     ) : (
-                                                        <p className="text-center text-xs font-bold text-red-200 py-4 uppercase tracking-tighter">{paymentError || "Error técnico"}</p>
+                                                        <div className="text-center p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-red-500/30">
+                                                            <p className="text-[10px] font-bold text-red-200 uppercase tracking-widest leading-relaxed">
+                                                                {paymentError || "Error técnico"}
+                                                            </p>
+                                                        </div>
                                                     )}
                                                 </div>
                                             )}
