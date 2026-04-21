@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
-import logo from '../assets/geminiLogo.png';
+import logo from '../assets/LogoClaroLogin.png';
 
 export default function Layout({ children, className = '' }) {
   const location = useLocation();
@@ -33,38 +33,33 @@ export default function Layout({ children, className = '' }) {
               <Link to="/" className="group">
                 <img src={logo} alt="Brumh" className="h-12 opacity-80 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105" />
               </Link>
-              <p className="text-xs text-slate-400 font-medium max-w-[200px] text-center md:text-left leading-relaxed">
-                El ecosistema digital líder para el parque automotriz moderno.
-              </p>
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-              <a href="/#sobre" onClick={scrollToSobre} className="text-xs font-black tracking-widest uppercase text-slate-500 hover:text-blue-600 transition-all cursor-pointer">
-                Ecosistema
-              </a>
-              <Link to="/premium" className="text-xs font-black tracking-widest uppercase text-slate-500 hover:text-blue-600 transition-all">
-                Planes PRO
+              <Link to="/" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
+                Inicio
               </Link>
-              <Link to="/terminos" className="text-xs font-black tracking-widest uppercase text-slate-500 hover:text-blue-600 transition-all">
+              <Link to="/nosotros" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
+                ¿Qué es Brumh?
+              </Link>
+              <Link to="/anuncios" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
+                Anuncios
+              </Link>
+              <Link to="/contacto" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
+                Contacto
+              </Link>
+              <Link to="/terminos" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
                 Legal
               </Link>
-              <Link to="/privacidad" className="text-xs font-black tracking-widest uppercase text-slate-500 hover:text-blue-600 transition-all">
+              <Link to="/privacidad" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
                 Privacidad
               </Link>
-              <a href="mailto:soporte@brumh.cl" className="text-xs font-black tracking-widest uppercase text-slate-500 hover:text-blue-600 transition-all">
-                Contacto
-              </a>
             </div>
 
-            <div className="flex flex-col items-center md:items-end gap-2">
-               <p className="text-xs text-slate-400 font-bold">
-                 © {new Date().getFullYear()} BRUMH SPA.
-               </p>
-               <div className="flex gap-4">
-                 <div className="w-5 h-5 bg-slate-100 rounded-lg"></div>
-                 <div className="w-5 h-5 bg-slate-100 rounded-lg"></div>
-                 <div className="w-5 h-5 bg-slate-100 rounded-lg"></div>
-               </div>
+            <div className="flex flex-col items-center md:items-end gap-2 text-center md:text-right">
+              <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase opacity-60">
+                © {new Date().getFullYear()} BRUMH SPA.
+              </p>
             </div>
           </div>
         </div>
@@ -72,3 +67,4 @@ export default function Layout({ children, className = '' }) {
     </div>
   );
 }
+

@@ -7,15 +7,15 @@ export default function TermsPage() {
                 <div className="max-w-3xl mx-auto">
                     <div className="bg-white p-10 md:p-16 shadow-xl shadow-slate-200 rounded-3xl border border-slate-100">
                         <header className="border-b border-slate-100 pb-8 mb-10">
-                            <h1 className="text-4xl font-black text-slate-900 mb-4">Términos de Servicio</h1>
-                            <p className="text-slate-500 font-medium tracking-wide uppercase text-xs">Versión 1.1 — Actualizado Marzo 2026</p>
+                            <h1 className="text-4xl font-bold text-slate-900 mb-4">Términos de Servicio</h1>
+                            <p className="text-slate-500 font-medium tracking-wide uppercase text-xs">Versión 1.1 — Actualizado Mayo 2026</p>
                         </header>
 
                         <article className="space-y-8">
                             <section>
                                 <h2 className="text-xl font-bold text-slate-800 mb-4">1. Naturaleza del Servicio</h2>
                                 <p className="text-slate-600 leading-relaxed">
-                                    Brumh actúa exclusivamente como un marketplace tecnológico. Al utilizar nuestra plataforma, usted reconoce que los contratos de servicio se realizan directamente entre el Usuario y el Proveedor (Taller/Servicio), siendo Brumh un tercero facilitador de la conexión.
+                                    Brumh actúa exclusivamente como un marketplace tecnológico. Al utilizar nuestra plataforma, usted reconoce que los contratos de servicio se realizan directamente entre el Usuario y el Proveedor (Negocios), siendo Brumh un tercero facilitador de la conexión.
                                 </p>
                             </section>
 
@@ -97,7 +97,7 @@ export default function TermsPage() {
                             <section className="pt-8 border-t border-slate-100">
                                 <p className="text-slate-500 text-sm text-center">
                                     Al utilizar Brumh, aceptas estos Términos de Servicio en su totalidad.<br />
-                                    ¿Preguntas? Escríbenos a <strong>soporte@brumh.cl</strong>
+                                    ¿Preguntas? Escríbenos a <strong>contactobrumh@gmail.com</strong>
                                 </p>
                             </section>
                         </article>
@@ -107,3 +107,4 @@ export default function TermsPage() {
         </Layout>
     );
 }
+

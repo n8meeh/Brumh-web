@@ -121,7 +121,7 @@ export default function PaymentResultPage({ status }) {
 
                         {/* Título */}
                         <div className="text-center mb-8">
-                            <h1 className="text-3xl font-black text-slate-900 mb-2 tracking-tight">
+                            <h1 className="text-3xl font-bold text-slate-900 mb-2 tracking-tight">
                                 {result.title}
                             </h1>
                             <p className={`text-sm font-semibold ${result.accentColor}`}>
@@ -214,7 +214,7 @@ export default function PaymentResultPage({ status }) {
                                 <ul className="space-y-2">
                                     {result.tips.map((t, i) => (
                                         <li key={i} className="flex items-center gap-2 text-sm text-slate-600">
-                                            <svg className="w-4 h-4 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+                                            <svg className="w-4 h-4 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                                             {t}
                                         </li>
                                     ))}
@@ -237,13 +237,7 @@ export default function PaymentResultPage({ status }) {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
                                 Ir al inicio
                             </Link>
-                            <a
-                                href="mailto:soporte@brumh.cl"
-                                className="flex-1 flex items-center justify-center gap-2 py-3 bg-white text-slate-700 font-semibold rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all text-sm"
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                                Contactar soporte
-                            </a>
+                            <p className="text-center text-slate-400 text-xs mt-6">Si tienes problemas con tu pago, envia un correo electronico a contactobrumh@gmail.com</p>
                         </div>
                     </div>
 
@@ -284,3 +278,4 @@ export default function PaymentResultPage({ status }) {
         </Layout>
     );
 }
+

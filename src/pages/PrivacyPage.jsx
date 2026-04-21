@@ -7,8 +7,8 @@ export default function PrivacyPage() {
                 <div className="max-w-3xl mx-auto">
                     <div className="bg-white p-10 md:p-16 shadow-xl shadow-slate-200 rounded-3xl border border-slate-100">
                         <header className="border-b border-slate-100 pb-8 mb-10">
-                            <h1 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Política de Privacidad</h1>
-                            <p className="text-slate-500 font-medium tracking-wide uppercase text-xs">Versión 1.1 — Actualizado Marzo 2026</p>
+                            <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Política de Privacidad</h1>
+                            <p className="text-slate-500 font-medium tracking-wide uppercase text-xs">Versión 1.1 — Actualizado Mayo 2026</p>
                         </header>
 
                         <article className="space-y-8">
@@ -59,7 +59,7 @@ export default function PrivacyPage() {
                             <section>
                                 <h2 className="text-xl font-bold text-slate-800 mb-4">6. Control de tus Datos</h2>
                                 <p className="text-slate-600 leading-relaxed">
-                                    Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento desde los ajustes de la App. Para una eliminación definitiva de la cuenta y todos sus datos asociados, puedes escribirnos a <strong>soporte@brumh.cl</strong>.
+                                    Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento desde los ajustes de la App. Para una eliminación definitiva de la cuenta y todos sus datos asociados, puedes escribirnos a <strong>contactobrumh@gmail.com</strong>.
                                 </p>
                             </section>
 
@@ -80,7 +80,7 @@ export default function PrivacyPage() {
                             <section className="pt-8 border-t border-slate-100">
                                 <p className="text-slate-500 text-sm text-center">
                                     Al utilizar Brumh, aceptas las prácticas descritas en esta política.<br />
-                                    ¿Preguntas? Escríbenos a <strong>soporte@brumh.cl</strong>
+                                    ¿Preguntas? Escríbenos a <strong>contactobrumh@gmail.com</strong>
                                 </p>
                             </section>
                         </article>
@@ -90,3 +90,4 @@ export default function PrivacyPage() {
         </Layout>
     );
 }
+

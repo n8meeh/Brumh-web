@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800;900&display=swap');
-
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Outfit', sans-serif;
+  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-display: 'Montserrat', sans-serif;
   
   --color-primary: #0f172a;
   --color-accent: #2563eb;
   --color-accent-dark: #1e40af;
   --color-surface: #f8fafc;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 @layer base {
@@ -32,11 +34,11 @@
   }
   
   .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl font-black tracking-tight transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl active:scale-95 bg-blue-600 text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700;
+    @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl font-bold tracking-tight transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl active:scale-95 bg-blue-600 text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700;
   }
   
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl font-black tracking-tight transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl active:scale-95 bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800;
+    @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl font-bold tracking-tight transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl active:scale-95 bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800;
   }
 
   /* Micro-animations */
