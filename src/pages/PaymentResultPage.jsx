@@ -99,14 +99,11 @@ const RESULTS = {
     },
 };
 
-export default function PaymentResultPage() {
+export default function PaymentResultPage({ status }) {
     const [searchParams] = useSearchParams();
     const paymentId = searchParams.get('payment_id');
     const externalRef = searchParams.get('external_reference');
-    
-    // TEMPO: Forzando la vista de éxito para que puedas visualizarla
-    const status = 'exito'; 
-    const result = RESULTS[status];
+    const result = RESULTS[status] || RESULTS.error;
     const { Icon } = result;
 
     return (
