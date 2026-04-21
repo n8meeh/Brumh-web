@@ -137,8 +137,10 @@ export default function PremiumPage() {
         
         if (user.role === 'provider' || user.role === 'provider_admin') {
             await createPreferenceWithAuth(token);
+        } else if (user.role === 'provider_staff') {
+            setPaymentError("Tu rol no te permite completar esta transacción.");
         } else {
-            setPaymentError("No posees un negocio o tu rol no te permite completar esta transacción.");
+            setPaymentError("No posees un negocio.");
         }
     };
 
