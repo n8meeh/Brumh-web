@@ -8,7 +8,7 @@ export default function PrivacyPage() {
                     <div className="bg-white p-10 md:p-16 shadow-xl shadow-slate-200 rounded-3xl border border-slate-100">
                         <header className="border-b border-slate-100 pb-8 mb-10">
                             <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Política de Privacidad</h1>
-                            <p className="text-slate-500 font-medium tracking-wide uppercase text-xs">Versión 1.1 — Actualizado Mayo 2026</p>
+                            <p className="text-slate-500 font-medium tracking-wide uppercase text-xs">Versión 1.2 — Actualizado Julio 2026</p>
                         </header>
 
                         <article className="space-y-8">
@@ -57,21 +57,59 @@ export default function PrivacyPage() {
                             </section>
 
                             <section>
-                                <h2 className="text-xl font-bold text-slate-800 mb-4">6. Control de tus Datos</h2>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">6. Base Legal del Tratamiento</h2>
+                                <p className="text-slate-600 leading-relaxed">
+                                    El tratamiento de tus datos personales se realiza sobre la base de tu consentimiento, el cual otorgas al momento de crear tu cuenta y aceptar estos términos. Puedes revocar dicho consentimiento en cualquier momento solicitando la eliminación de tu cuenta, conforme a lo descrito en la sección de Retención de Datos.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">7. Transferencia Internacional de Datos</h2>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Algunos de los proveedores tecnológicos que utilizamos — incluyendo Firebase (Google) y AWS — operan servidores ubicados fuera de Chile, principalmente en Estados Unidos. Al usar Brumh, aceptas que tus datos puedan ser almacenados y procesados en dichos servidores. Estos proveedores cuentan con certificaciones de seguridad internacionales y están sujetos a sus propias políticas de privacidad y marcos de protección de datos.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">9. Publicidad</h2>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Brumh muestra anuncios de marcas comerciales dentro de la plataforma. Estos anuncios son <strong>contextuales y no personalizados</strong>, es decir, todos los usuarios ven el mismo contenido publicitario independientemente de su perfil, historial o actividad dentro de la app. No utilizamos tus datos personales para segmentar ni personalizar la publicidad que se muestra.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">10. Retención de Datos y Eliminación de Cuenta</h2>
+                                <p className="text-slate-600 leading-relaxed mb-4">
+                                    Cuando solicitas la eliminación de tu cuenta, tus datos personales identificables son <strong>anonimizados de forma inmediata</strong>: tu nombre es reemplazado por un valor genérico, tu correo electrónico es ofuscado y tu foto de perfil es eliminada. Tus tokens de sesión y de notificaciones también son revocados en ese acto.
+                                </p>
+                                <p className="text-slate-600 leading-relaxed">
+                                    El registro técnico de la cuenta (sin datos personales identificables) puede conservarse de forma indefinida para mantener la integridad de la plataforma, prevenir abusos y cumplir con obligaciones legales. Si deseas confirmar la eliminación de tu cuenta, puedes escribirnos a <strong>contactobrumh@gmail.com</strong>.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">11. Edad Mínima</h2>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Brumh está dirigido a conductores y dueños de vehículos mayores de 17 años. No recopilamos conscientemente datos de personas menores de esa edad. Si detectamos que una cuenta pertenece a un menor, será suspendida y sus datos eliminados.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">12. Control de tus Datos</h2>
                                 <p className="text-slate-600 leading-relaxed">
                                     Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento desde los ajustes de la App. Para una eliminación definitiva de la cuenta y todos sus datos asociados, puedes escribirnos a <strong>contactobrumh@gmail.com</strong>.
                                 </p>
                             </section>
 
                             <section>
-                                <h2 className="text-xl font-bold text-slate-800 mb-4">7. Seguridad</h2>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">13. Seguridad</h2>
                                 <p className="text-slate-600 leading-relaxed">
                                     Implementamos medidas de seguridad técnicas y organizativas para proteger tu información personal contra acceso no autorizado, pérdida o alteración. Las contraseñas se almacenan de forma cifrada y las comunicaciones se realizan mediante conexiones seguras (HTTPS).
                                 </p>
                             </section>
 
                             <section>
-                                <h2 className="text-xl font-bold text-slate-800 mb-4">8. Cambios a esta Política</h2>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">14. Cambios a esta Política</h2>
                                 <p className="text-slate-600 leading-relaxed">
                                     Nos reservamos el derecho de actualizar esta Política de Privacidad. Cualquier cambio será notificado a través de la aplicación o por correo electrónico. El uso continuado de Brumh después de los cambios implica la aceptación de la política actualizada.
                                 </p>

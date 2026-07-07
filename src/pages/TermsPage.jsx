@@ -102,7 +102,14 @@ export default function TermsPage() {
                             </section>
 
                             <section>
-                                <h2 className="text-xl font-bold text-slate-800 mb-4">12. Ley Aplicable y Jurisdicción</h2>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">12. Resolución de Disputas</h2>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Ante cualquier conflicto, reclamación o disputa derivada del uso de Brumh, las partes se comprometen a intentar resolverlo de forma amistosa en primera instancia, contactando al equipo de Brumh a través de <strong>contactobrumh@gmail.com</strong>. Solo en caso de no alcanzar una solución en un plazo razonable, se podrá recurrir a las instancias judiciales correspondientes.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">13. Ley Aplicable y Jurisdicción</h2>
                                 <p className="text-slate-600 leading-relaxed">
                                     Estos Términos de Servicio se rigen e interpretan de acuerdo con las leyes de la República de Chile. Cualquier disputa derivada del uso de la plataforma será sometida a la jurisdicción exclusiva de los tribunales ordinarios de justicia de Chile, renunciando las partes a cualquier otro fuero que pudiera corresponderles.
                                 </p>
