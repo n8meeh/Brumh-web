@@ -52,7 +52,7 @@ export default function PrivacyPage() {
                             <section>
                                 <h2 className="text-xl font-bold text-slate-800 mb-4">5. Comunicaciones por Correo Electrónico</h2>
                                 <p className="text-slate-600 leading-relaxed">
-                                    Enviamos correos electrónicos en los siguientes casos: creación de cuenta, recuperación de contraseña, bienvenida al registrar un negocio, cierre de negocio y solicitudes relacionadas con suscripciones Premium. No enviamos correos promocionales sin tu consentimiento.
+                                    Enviamos correos electrónicos en los siguientes casos: creación de cuenta, recuperación de contraseña, bienvenida al registrar un negocio y cierre de negocio. No enviamos correos promocionales sin tu consentimiento.
                                 </p>
                             </section>
 

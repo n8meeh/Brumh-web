@@ -96,13 +96,6 @@ export default function Header() {
             })}
           </div>
 
-          {/* Botón Premium Mejorado */}
-          <Link
-            to="/premium"
-            className="px-6 py-2.5 bg-[#0f172a] text-white text-xs font-bold tracking-widest uppercase rounded-full hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 active:scale-95"
-          >
-            PREMIUM
-          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -143,13 +136,6 @@ export default function Header() {
               </Link>
             )
           ))}
-          <Link
-            to="/premium"
-            onClick={() => setMobileOpen(false)}
-            className="mt-4 p-4 bg-blue-600 text-white text-center rounded-2xl font-bold tracking-widest uppercase shadow-lg shadow-blue-200"
-          >
-            PREMIUM
-          </Link>
         </div>
       </div>
     </nav>

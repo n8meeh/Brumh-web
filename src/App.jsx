@@ -4,8 +4,6 @@ import Layout from './components/Layout';
 
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
-const PremiumPage = lazy(() => import('./pages/PremiumPage'));
-const PaymentResultPage = lazy(() => import('./pages/PaymentResultPage'));
 const AdsPage = lazy(() => import('./pages/AdsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
@@ -249,13 +247,9 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/privacidad" element={<PrivacyPage />} />
           <Route path="/terminos" element={<TermsPage />} />
-          <Route path="/premium" element={<PremiumPage />} />
-          <Route path="/premium/exito" element={<PaymentResultPage status="exito" />} />
           <Route path="/anuncios" element={<AdsPage />} />
           <Route path="/nosotros" element={<AboutPage />} />
           <Route path="/contacto" element={<ContactPage />} />
-          <Route path="/premium/error" element={<PaymentResultPage status="error" />} />
-          <Route path="/premium/pendiente" element={<PaymentResultPage status="pendiente" />} />
         </Routes>
       </Suspense>
     </Router>
