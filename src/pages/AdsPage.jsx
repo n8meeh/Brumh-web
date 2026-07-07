@@ -8,11 +8,6 @@ const AD_LOCATIONS = [
         icon: '📱'
     },
     {
-        title: 'Directorio de Negocios',
-        desc: 'Aparece en los primeros resultados cuando alguien busca servicios técnicos.',
-        icon: '🛠️'
-    },
-    {
         title: 'Explorador de Grupos',
         desc: 'Impacta a comunidades específicas según sus intereses automotrices.',
         icon: '👥'
@@ -33,7 +28,7 @@ export default function AdsPage() {
                 </div>
 
                 {/* Visualización de beneficios basados en DB */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 max-w-3xl mx-auto">
                     {AD_LOCATIONS.map((loc, i) => (
                         <div key={i} className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl hover:shadow-blue-600/5 transition-all">
                             <div className="text-4xl mb-6">{loc.icon}</div>
