@@ -10,6 +10,14 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 import heroImg2 from './assets/reparacion.png';
 import heroImg3 from './assets/appImage.png';
+import acuerdoImg from './assets/acuerdoImage.png';
+import carouselImg1 from './assets/primero.png';
+import carouselImg2 from './assets/segundo.png';
+import carouselImg3 from './assets/tercero.png';
+import carouselImg4 from './assets/cuarto.png';
+import carouselImg5 from './assets/quinto.png';
+
+const CAROUSEL_IMAGES = [carouselImg1, carouselImg2, carouselImg3, carouselImg4, carouselImg5];
 
 import Reveal from './components/Reveal';
 
@@ -50,6 +58,14 @@ function ScrollToTop() {
 
 function Landing() {
   const [activeTab, setActiveTab] = useState('usuarios');
+  const [carouselIdx, setCarouselIdx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselIdx(i => (i + 1) % CAROUSEL_IMAGES.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Layout>
@@ -113,17 +129,87 @@ function Landing() {
               </div>
             </div>
 
-            {/* Imagen */}
+            {/* Carrusel */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative w-72 md:w-96">
-                <div className="absolute inset-0 bg-blue-600/10 blur-3xl rounded-full scale-110" />
-                <img
-                  src={heroImg3}
-                  alt="Brumh App"
-                  className="relative w-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-                />
+              <div className="relative w-full max-w-lg aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200/60">
+                {CAROUSEL_IMAGES.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    alt={`Brumh ${i + 1}`}
+                    loading="lazy"
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === carouselIdx ? 'opacity-100' : 'opacity-0'}`}
+                  />
+                ))}
+                {/* Indicadores */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                  {CAROUSEL_IMAGES.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCarouselIdx(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${i === carouselIdx ? 'w-6 bg-white' : 'w-1.5 bg-white/50'}`}
+                      aria-label={`Imagen ${i + 1}`}
+                    />
+                  ))}
+                </div>
+                {/* Overlay sutil */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent pointer-events-none" />
               </div>
             </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ CONFIANZA ═══════ */}
+      <section className="py-24 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+            {/* Imagen */}
+            <Reveal>
+              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl shadow-slate-200/60">
+                <img
+                  src={acuerdoImg}
+                  alt="Mecánica entregando llaves a cliente"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent" />
+              </div>
+            </Reveal>
+
+            {/* Texto */}
+            <Reveal delay={200}>
+              <div className="space-y-8">
+                <span className="inline-block py-1.5 px-4 rounded-full bg-blue-100 text-blue-600 text-[10px] font-bold tracking-widest uppercase">
+                  Confianza verificada
+                </span>
+                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tighter leading-[0.95]">
+                  El taller correcto,<br /><span className="text-blue-600">a la primera.</span>
+                </h2>
+                <p className="text-lg text-slate-500 font-medium leading-relaxed">
+                  Sabemos lo difícil que es encontrar un mecánico de confianza. Por eso en Brumh cada negocio es evaluado por la comunidad — reseñas reales de conductores reales.
+                </p>
+                <div className="space-y-4">
+                  {[
+                    { stat: 'Reseñas reales', desc: 'Solo clientes verificados pueden opinar sobre un negocio.' },
+                    { stat: 'Cotización directa', desc: 'Escríbele al taller sin intermediarios y compara precios.' },
+                    { stat: 'Comunidad activa', desc: 'Miles de dueños de vehículos resolviendo dudas juntos.' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-4 items-start">
+                      <div className="mt-1 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                        <div className="w-2 h-2 rounded-full bg-blue-600" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-slate-900">{item.stat}</p>
+                        <p className="text-sm text-slate-500">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
 
           </div>
         </div>
