@@ -8,38 +8,10 @@ const AdsPage = lazy(() => import('./pages/AdsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 
-import heroImg1 from './assets/acuerdoImage.png';
 import heroImg2 from './assets/reparacion.png';
 import heroImg3 from './assets/appImage.png';
 
-const HERO_IMAGES = [heroImg1, heroImg2, heroImg3];
-
-/* ── Scroll Reveal wrapper ── */
-function Reveal({ children, className = '', delay = 0 }) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(el); } },
-      { threshold: 0.15 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-500 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
-}
+import Reveal from './components/Reveal';
 
 /* ── Check icon reutilizable ── */
 const Check = ({ color = 'text-blue-600' }) => (
@@ -158,7 +130,7 @@ function Landing() {
       </section>
 
       {/* ═══════ FUNCIONAMIENTO ═══════ */}
-      <section className="relative scroll-mt-24 py-24 overflow-hidden border-t border-slate-100">
+      <section id="sobre" className="relative scroll-mt-24 py-24 overflow-hidden border-t border-slate-100">
         {/* Fondo decorativo sutil */}
         <div className="absolute top-0 left-0 w-full h-full bg-slate-50/50 -z-10 pointer-events-none"></div>
 
