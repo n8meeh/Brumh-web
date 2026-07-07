@@ -26,7 +26,7 @@ export default function AboutPage() {
                                         "Brumh no es solo una herramienta, es el ecosistema donde el conocimiento técnico y la necesidad comercial se encuentran para simplificar la vida de cada conductor."
                                     </p>
 
-                                    <div className="space-y-8 text-slate-500 text-lg md:text-xl leading-relaxed font-medium text-justify">
+                                    <div className="space-y-8 text-slate-500 text-lg md:text-xl leading-relaxed font-medium">
                                         <p>
                                             Brumh nace para eliminar la incertidumbre del mundo automotriz. Es el puente definitivo entre el
                                             dueño de un vehículo y el experto que tiene la solución. No somos un simple directorio;

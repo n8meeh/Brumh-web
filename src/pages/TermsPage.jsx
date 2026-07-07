@@ -8,7 +8,7 @@ export default function TermsPage() {
                     <div className="bg-white p-10 md:p-16 shadow-xl shadow-slate-200 rounded-3xl border border-slate-100">
                         <header className="border-b border-slate-100 pb-8 mb-10">
                             <h1 className="text-4xl font-bold text-slate-900 mb-4">Términos de Servicio</h1>
-                            <p className="text-slate-500 font-medium tracking-wide uppercase text-xs">Versión 1.1 — Actualizado Mayo 2026</p>
+                            <p className="text-slate-500 font-medium tracking-wide uppercase text-xs">Versión 1.1 — Actualizado Julio 2026</p>
                         </header>
 
                         <article className="space-y-8">
@@ -71,6 +71,40 @@ export default function TermsPage() {
                                 <h2 className="text-xl font-bold text-slate-800 mb-4">8. Modificaciones</h2>
                                 <p className="text-slate-600 leading-relaxed">
                                     Brumh se reserva el derecho de modificar estos Términos de Servicio en cualquier momento. Los cambios serán notificados a través de la aplicación o por correo electrónico. El uso continuado de la plataforma tras la notificación implica la aceptación de los términos actualizados.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">9. Modelo Comercial y Pagos</h2>
+                                <p className="text-slate-600 leading-relaxed mb-4">
+                                    El modelo de negocio principal de Brumh consiste en la contratación de espacios publicitarios dentro de la plataforma por parte de marcas comerciales. Estos acuerdos se gestionan directamente con el equipo de Brumh y están sujetos a condiciones específicas acordadas en cada contrato comercial.
+                                </p>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Brumh podrá en el futuro ofrecer funcionalidades de pago dirigidas a negocios registrados, tales como planes de suscripción o herramientas premium. Dichos servicios serán opcionales, claramente informados con anticipación y sujetos a condiciones particulares que se comunicarán oportunamente. El uso de las funcionalidades gratuitas de la plataforma no se verá afectado por la incorporación de servicios de pago.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">10. Edad Mínima</h2>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Brumh está orientado a conductores y dueños de vehículos. En Chile, la edad mínima para obtener una licencia de conducir es de 17 años, por lo que el uso de la plataforma está dirigido a personas de esa edad o mayores. Al registrarte, declaras tener al menos 17 años. Brumh se reserva el derecho de suspender cuentas que no cumplan este requisito.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">11. Propiedad Intelectual</h2>
+                                <p className="text-slate-600 leading-relaxed mb-4">
+                                    Todo el contenido propio de la plataforma — incluyendo el nombre Brumh, logotipos, diseño visual, código fuente, estructura y funcionalidades — es propiedad exclusiva de Brumh SPA y está protegido por las leyes de propiedad intelectual vigentes en Chile. Queda prohibida su reproducción, distribución o uso sin autorización expresa.
+                                </p>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Respecto al contenido generado por los usuarios (fotos, publicaciones, reseñas y comentarios), el usuario conserva la titularidad de sus contenidos y otorga a Brumh una licencia no exclusiva para mostrarlos dentro de la plataforma con el fin de mantener el ecosistema de la comunidad. El usuario puede eliminar en cualquier momento su contenido a través de las funciones disponibles en la aplicación, momento en el cual dicha licencia queda revocada para ese contenido específico.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h2 className="text-xl font-bold text-slate-800 mb-4">12. Ley Aplicable y Jurisdicción</h2>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Estos Términos de Servicio se rigen e interpretan de acuerdo con las leyes de la República de Chile. Cualquier disputa derivada del uso de la plataforma será sometida a la jurisdicción exclusiva de los tribunales ordinarios de justicia de Chile, renunciando las partes a cualquier otro fuero que pudiera corresponderles.
                                 </p>
                             </section>
 
