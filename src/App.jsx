@@ -8,14 +8,14 @@ const AdsPage = lazy(() => import('./pages/AdsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 
-import heroImg2 from './assets/reparacion.png';
-import heroImg3 from './assets/appImage.png';
-import acuerdoImg from './assets/acuerdoImage.png';
-import carouselImg1 from './assets/primero.png';
-import carouselImg2 from './assets/segundo.png';
-import carouselImg3 from './assets/tercero.png';
-import carouselImg4 from './assets/cuarto.png';
-import carouselImg5 from './assets/quinto.png';
+import heroImg2 from './assets/optimized/reparacion.webp';
+import heroImg3 from './assets/optimized/appImage.webp';
+import acuerdoImg from './assets/optimized/acuerdoImage.webp';
+import carouselImg1 from './assets/optimized/primero.webp';
+import carouselImg2 from './assets/optimized/segundo.webp';
+import carouselImg3 from './assets/optimized/tercero.webp';
+import carouselImg4 from './assets/optimized/cuarto.webp';
+import carouselImg5 from './assets/optimized/quinto.webp';
 
 const CAROUSEL_IMAGES = [carouselImg1, carouselImg2, carouselImg3, carouselImg4, carouselImg5];
 
