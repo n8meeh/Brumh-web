@@ -53,7 +53,23 @@ export default function ContactPage() {
 
                                 <div className="h-px w-20 bg-slate-100 mx-auto"></div>
 
-                                <div className="space-y-6">
+                                <div className="h-px w-20 bg-slate-100 mx-auto"></div>
+
+                                <div id="eliminar-cuenta" className="space-y-4 text-left bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 text-center">Eliminación de cuenta</p>
+                                    <p className="text-sm text-slate-500 leading-relaxed">
+                                        Para solicitar la eliminación de tu cuenta y datos asociados, tienes dos opciones:
+                                    </p>
+                                    <ol className="text-sm text-slate-500 leading-relaxed space-y-2 list-decimal ml-4">
+                                        <li><strong className="text-slate-700">Desde la app:</strong> Ve a tu perfil → Ajustes → Eliminar cuenta. Tus datos personales serán anonimizados de inmediato.</li>
+                                        <li><strong className="text-slate-700">Por correo:</strong> Escríbenos a <strong className="text-slate-700">contactobrumh@gmail.com</strong> con el asunto "Eliminar cuenta" indicando el email de tu cuenta. Procesaremos tu solicitud en un plazo máximo de 48 horas.</li>
+                                    </ol>
+                                    <p className="text-xs text-slate-400 leading-relaxed">
+                                        Al eliminar tu cuenta: tu nombre, email y foto de perfil son anonimizados inmediatamente. El registro técnico puede conservarse para mantener la integridad de la plataforma y prevenir abusos.
+                                    </p>
+                                </div>
+
+                        <div className="space-y-6">
                                     <p className="text-sm font-medium text-slate-500">O mediante nuestro Instagram</p>
                                     <a 
                                         href="https://www.instagram.com/brumh_app" 
