@@ -22,7 +22,7 @@ const FAQS = [
         a: (
             <ol className="list-decimal ml-4 space-y-1">
                 <li>Crea una cuenta de usuario en la app.</li>
-                <li>Ve a tu perfil y selecciona "Registrar negocio".</li>
+                <li>Ve a tu perfil y selecciona "Crear mi Negocio".</li>
                 <li>Completa la información de tu negocio: nombre, categoría, dirección y datos de contacto.</li>
                 <li>Sube tu logo y foto de portada.</li>
                 <li>Tu negocio quedará visible para la comunidad de inmediato.</li>
@@ -32,13 +32,7 @@ const FAQS = [
     {
         q: '¿Cómo cierro o doy de baja mi negocio?',
         a: (
-            <div className="space-y-2">
-                <p>Tienes dos opciones:</p>
-                <ol className="list-decimal ml-4 space-y-1">
-                    <li><strong>Desde la app:</strong> Ve al panel de tu negocio → Ajustes → Cerrar negocio. Tu negocio dejará de ser visible para los usuarios.</li>
-                    <li><strong>Por correo:</strong> Escríbenos a <strong>contactobrumh@gmail.com</strong> con el asunto "Cerrar negocio" indicando el nombre y email asociado.</li>
-                </ol>
-            </div>
+            <p>Ve al panel de tu negocio → Ajustes → Cerrar negocio. Tu negocio dejará de ser visible para los usuarios de inmediato.</p>
         )
     },
 ];
