@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { to: '/nosotros', label: '¿Qué es Brumh?' },
   { to: '/anuncios', label: 'Anuncios' },
   { to: '/contacto', label: 'Contacto' },
+  { to: '/faq', label: 'FAQ' },
   { to: '/terminos', label: 'Legal' },
   { to: '/privacidad', label: 'Privacidad' },
 ];

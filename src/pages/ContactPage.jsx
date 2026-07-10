@@ -1,16 +1,7 @@
 import Layout from '../components/Layout';
 import Reveal from '../components/Reveal';
-import { useState } from 'react';
-
 
 export default function ContactPage() {
-    const [formStatus, setFormStatus] = useState(null);
-    const [deleteOpen, setDeleteOpen] = useState(false);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setFormStatus('success');
-    };
 
     return (
         <Layout>
@@ -54,31 +45,7 @@ export default function ContactPage() {
 
                                 <div className="h-px w-20 bg-slate-100 mx-auto"></div>
 
-                                <div className="h-px w-20 bg-slate-100 mx-auto"></div>
-
-                                <div id="eliminar-cuenta">
-                                    <button
-                                        onClick={() => setDeleteOpen(!deleteOpen)}
-                                        className="w-full flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors text-left"
-                                    >
-                                        <span className="text-sm font-semibold text-slate-600">Eliminar mi cuenta</span>
-                                        <svg className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${deleteOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    <div className={`overflow-hidden transition-all duration-300 ${deleteOpen ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
-                                        <div className="space-y-3 text-left bg-slate-50 rounded-2xl p-5 border border-slate-100">
-                                            <p className="text-sm text-slate-500 leading-relaxed">Para eliminar tu cuenta y datos asociados tienes dos opciones:</p>
-                                            <ol className="text-sm text-slate-500 leading-relaxed space-y-2 list-decimal ml-4">
-                                                <li><strong className="text-slate-700">Desde la app:</strong> Ve a tu perfil → Ajustes → Eliminar cuenta. Tus datos personales serán anonimizados de inmediato.</li>
-                                                <li><strong className="text-slate-700">Por correo:</strong> Escríbenos a <strong className="text-slate-700">contactobrumh@gmail.com</strong> con el asunto "Eliminar cuenta" indicando el email de tu cuenta.</li>
-                                            </ol>
-                                            <p className="text-xs text-slate-400 leading-relaxed">Al eliminar tu cuenta, tu nombre, email y foto de perfil son anonimizados inmediatamente. El registro técnico puede conservarse para mantener la integridad de la plataforma y prevenir abusos.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                        <div className="space-y-6">
+                                <div className="space-y-6">
                                     <p className="text-sm font-medium text-slate-500">O mediante nuestro Instagram</p>
                                     <a 
                                         href="https://www.instagram.com/brumh_app" 

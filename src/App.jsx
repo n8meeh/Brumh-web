@@ -7,6 +7,7 @@ const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const AdsPage = lazy(() => import('./pages/AdsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+const FaqPage = lazy(() => import('./pages/FaqPage'));
 
 import heroImg2 from './assets/optimized/reparacion.webp';
 import heroImg3 from './assets/optimized/appImage.webp';
@@ -381,6 +382,7 @@ function App() {
           <Route path="/anuncios" element={<AdsPage />} />
           <Route path="/nosotros" element={<AboutPage />} />
           <Route path="/contacto" element={<ContactPage />} />
+          <Route path="/faq" element={<FaqPage />} />
         </Routes>
       </Suspense>
     </Router>

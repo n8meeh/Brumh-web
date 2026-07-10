@@ -48,6 +48,9 @@ export default function Layout({ children, className = '' }) {
               <Link to="/contacto" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
                 Contacto
               </Link>
+              <Link to="/faq" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
+                FAQ
+              </Link>
               <Link to="/terminos" className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-blue-600 transition-all">
                 Legal
               </Link>
