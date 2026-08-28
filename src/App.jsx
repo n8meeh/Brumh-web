@@ -113,17 +113,16 @@ function Landing() {
 
                 {/* Google Play */}
                 <a
-                  href="#"
-                  aria-disabled="true"
-                  onClick={e => e.preventDefault()}
-                  className="flex items-center gap-3 bg-slate-900 text-white px-6 py-4 rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 opacity-60 cursor-not-allowed"
-                  title="Próximamente en Google Play"
+                  href="https://play.google.com/store/apps/details?id=com.brumh.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-slate-900 text-white px-6 py-4 rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20"
                 >
                   <svg className="w-7 h-7 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M3.18 23.76c.3.17.64.24.99.2l12.75-7.37-2.77-2.78-10.97 9.95zM.49 1.1A1.5 1.5 0 000 2.27v19.46c0 .47.18.9.49 1.17l.06.06 10.9-10.9v-.26L.55 1.04.49 1.1zM22.47 10.2l-2.8-1.62-3.12 3.12 3.12 3.12 2.82-1.63c.8-.46.8-1.52-.02-1.99zM4.17.24L16.92 7.6l-2.77 2.78L3.18.24A1.2 1.2 0 014.17.24z" />
                   </svg>
                   <div className="text-left">
-                    <p className="text-[9px] font-medium tracking-widest uppercase opacity-70">Próximamente</p>
+                    <p className="text-[9px] font-medium tracking-widest uppercase opacity-70">Disponible en</p>
                     <p className="text-sm font-bold">Google Play</p>
                   </div>
                 </a>

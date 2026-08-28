@@ -13,6 +13,8 @@ const NAV_LINKS = [
   { to: '/privacidad', label: 'Privacidad' },
 ];
 
+const DONATE_URL = 'https://link.mercadopago.cl/brumh';
+
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -99,6 +101,15 @@ export default function Header() {
 
         </div>
 
+          <a
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-blue-600/20"
+          >
+            ❤️ Donar
+          </a>
+
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -137,6 +148,14 @@ export default function Header() {
               </Link>
             )
           ))}
+          <a
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-blue-600 text-white text-lg font-semibold"
+          >
+            ❤️ Donar
+          </a>
         </div>
       </div>
     </nav>
